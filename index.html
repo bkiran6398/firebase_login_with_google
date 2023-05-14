@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-auth.js"></script>
+  <script>
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    // IMP this config can be obtained in firebase console by:
+    // 1. create web app in project
+    // 2. project settings -> (scroll down) -> select created web app -> Config
+    const firebaseConfig =  {
+      apiKey: "---",
+      authDomain: "---",
+      projectId: "---",
+      storageBucket: "---",
+      messagingSenderId: "---",
+      appId: "---",
+      measurementId: "---"
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    function signInWithGoogle() {
+      var provider = new firebase.auth.GoogleAuthProvider();
+
+      firebase.auth().signInWithPopup(provider)
+        .then(function(result) {
+          // The user is signed in, and you can access the Firebase token
+          var user = result.user;
+          user.getIdToken(/* forceRefresh */ true)
+            .then(function(idToken) {
+              // The Firebase token is available here
+              console.log("Firebase Token:", idToken);
+              // You can use the token for further operations
+            })
+            .catch(function(error) {
+              console.log("Error generating Firebase token:", error);
+            });
+        })
+        .catch(function(error) {
+          console.log("Google sign-in error:", error);
+        });
+    }
+  </script>
+</head>
+<body>
+  <!-- Include your HTML content here -->
+
+  <!-- Trigger Google sign-in by clicking the button -->
+  <button onclick="signInWithGoogle()">Sign in with Google</button>
+</body>
+</html>
